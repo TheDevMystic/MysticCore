@@ -14,8 +14,8 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/types/standard_defs.hpp
- * @file standard_defs.hpp
+ * @path [ROOT]/include/mystic/types/standard_def.hpp
+ * @file standard_def.hpp
  * @brief Defines components of cstddef.
  *
  * @details
@@ -23,7 +23,7 @@
  *
  * @code {.cpp}
  * // Example
- * #include "mystic/types/standard_defs.hpp"
+ * #include "mystic/types/standard_def.hpp"
  *
  * int main() {
  *     // size_t
