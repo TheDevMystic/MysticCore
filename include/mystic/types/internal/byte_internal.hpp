@@ -34,6 +34,7 @@
 
 #include "mystic/assert/assert.hpp"
 #include "mystic/architecture/forceinline.hpp"
+#include "mystic/traits/is_integral.hpp"
 
 /**
  * @namespace mystic::types::internal
@@ -57,36 +58,83 @@ enum class byte : unsigned char {};
 // --- Conversion Operators ---
 
 /**
- * @brief Function for conversion of byte to integer.
+ * @brief Function for conversion of byte to integer (non-const).
  *
- * @tparam T The integral type.
- *
- * @param byte The byte enum to be converted.
+ * @tparam IntegerType The integral type.
+ * @param b The byte enum to be converted.
+ * 
+ * @pre IntegerType must be an integral type.
  *
  * @returns Integer version of byte.
  */
-template <typename T = unsigned int,
-          typename = ::std::enable_if<
-              std::is_integral<T>::value
-          >::type>
-constexpr MYSTIC_FORCEINLINE T ConvertToInteger(const byte& byte) noexcept {
-    return static_cast<T>(byte);
+template <typename IntegerType = unsigned int>
+constexpr MYSTIC_FORCEINLINE IntegerType ConvertToInteger(byte b) noexcept {
+    // Ensure that IntegerType is an integral type.
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "The given variable type must be an integral type.")
+
+    // Perform the cast
+    return static_cast<IntegerType>(b);
 }
 
 /**
- * @brief Function for conversion of integer to byte.
+ * @brief Function for conversion of byte to integer (const).
  *
- * @tparam T Integral type.
+ * @tparam IntegerType The integral type.
+ * @param b The byte enum to be converted.
+ * 
+ * @pre IntegerType must be an integral type.
+ *
+ * @returns Integer version of byte.
+ */
+template <typename IntegerType = unsigned int>
+constexpr MYSTIC_FORCEINLINE IntegerType ConvertToInteger(const byte b) noexcept {
+    // Ensure that IntegerType is an integral type.
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "The given variable type must be an integral type.")
+
+    return static_cast<IntegerType>(b);
+}
+
+/**
+ * @brief Function for conversion of integer to byte (non-const).
+ *
+ * @tparam IntegerType The integral type.
  * @param value The integral to be converted.
+ * 
+ * @pre IntegerType must be an integral type.
+ * @pre value must be in range of byte (8 bit), i.e., 0 - 255.
  *
  * @returns Byte.
  */
-template <typename T = unsigned int,
-          typename = ::std::enable_if<
-              std::is_integral<T>::value
-          >::type>
-constexpr MYSTIC_FORCEINLINE byte ConvertToByte(const T& value) noexcept {
-    MYSTIC_DASSERT(value >= 0 && value <= 255, "The given variable value exceeds the range of byte.")
+template <typename IntegerType = unsigned int>
+constexpr MYSTIC_FORCEINLINE byte ConvertToByte(IntegerType value) noexcept {
+    // Ensure that IntegerType is an integral type.
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "The given variable type must be an integral type.")
+
+    // Ensure the value is in byte range.
+    MYSTIC_DCHECK(value >= 0 && value <= 255, "The given variable value exceeds the range of byte.")
+
+    return static_cast<byte>(value);
+}
+
+/**
+ * @brief Function for conversion of integer to byte (const).
+ *
+ * @tparam IntegerType The integral type.
+ * @param value The integral to be converted.
+ * 
+ * @pre IntegerType must be an integral type.
+ * @pre value must be in range of byte (8 bit), i.e., 0 - 255.
+ *
+ * @returns Byte.
+ */
+template <typename IntegerType = unsigned int>
+constexpr MYSTIC_FORCEINLINE byte ConvertToByte(const IntegerType value) noexcept {
+    // Ensure that IntegerType is an integral type.
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "The given variable type must be an integral type.")
+
+    // Ensure the value is in byte range.
+    MYSTIC_DCHECK(value >= 0 && value <= 255, "The given variable value exceeds the range of byte.")
+
     return static_cast<byte>(value);
 }
 
