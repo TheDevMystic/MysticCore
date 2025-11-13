@@ -71,6 +71,12 @@
 #include <cstdint>
 
 /**
+ * @namespace mystic
+ * @brief Top-level namespace.
+ */
+namespace mystic {
+
+/**
  * @namespace mystic::types
  * @ingroup Types
  * @brief Basic and high level data types.
@@ -78,7 +84,7 @@
  * This namespace contains all data types from low level
  * to high level.
  */
-namespace mystic::types {
+namespace types {
 
 /**
  * @brief Signed fixed-width integers types.
@@ -140,7 +146,8 @@ using uintmax_t = ::std::uintmax_t;
 using intptr_t  = ::std::intptr_t;
 using uintptr_t = ::std::uintptr_t;
 
-} // namespace mystic::types
+} // namespace types
+} // namespace mystic
 
 /**
  * @brief if user opted in for macros, then alias standard library

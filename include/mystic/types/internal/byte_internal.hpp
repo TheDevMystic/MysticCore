@@ -30,8 +30,6 @@
  */
 #pragma once
 
-#include <type_traits>
-
 #include "mystic/assert/assert.hpp"
 #include "mystic/architecture/forceinline.hpp"
 #include "mystic/traits/is_integral.hpp"
@@ -70,7 +68,7 @@ enum class byte : unsigned char {};
 template <typename IntegerType = unsigned int>
 constexpr MYSTIC_FORCEINLINE IntegerType ConvertToInteger(byte b) noexcept {
     // Ensure that IntegerType is an integral type.
-    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "The given variable type must be an integral type.")
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "[MYSTIC FRAMEWORK] - Byte - The given variable type must be an integral type.")
 
     // Perform the cast
     return static_cast<IntegerType>(b);
@@ -89,7 +87,7 @@ constexpr MYSTIC_FORCEINLINE IntegerType ConvertToInteger(byte b) noexcept {
 template <typename IntegerType = unsigned int>
 constexpr MYSTIC_FORCEINLINE IntegerType ConvertToInteger(const byte b) noexcept {
     // Ensure that IntegerType is an integral type.
-    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "The given variable type must be an integral type.")
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "[MYSTIC FRAMEWORK] - Byte - The given variable type must be an integral type.")
 
     return static_cast<IntegerType>(b);
 }
@@ -108,10 +106,10 @@ constexpr MYSTIC_FORCEINLINE IntegerType ConvertToInteger(const byte b) noexcept
 template <typename IntegerType = unsigned int>
 constexpr MYSTIC_FORCEINLINE byte ConvertToByte(IntegerType value) noexcept {
     // Ensure that IntegerType is an integral type.
-    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "The given variable type must be an integral type.")
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "[MYSTIC FRAMEWORK] - Byte - The given variable type must be an integral type.")
 
     // Ensure the value is in byte range.
-    MYSTIC_DCHECK(value >= 0 && value <= 255, "The given variable value exceeds the range of byte.")
+    MYSTIC_DCHECK(value >= 0 && value <= 255, "[MYSTIC FRAMEWORK] - Byte - The given variable value exceeds the range of byte.")
 
     return static_cast<byte>(value);
 }
@@ -130,10 +128,10 @@ constexpr MYSTIC_FORCEINLINE byte ConvertToByte(IntegerType value) noexcept {
 template <typename IntegerType = unsigned int>
 constexpr MYSTIC_FORCEINLINE byte ConvertToByte(const IntegerType value) noexcept {
     // Ensure that IntegerType is an integral type.
-    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "The given variable type must be an integral type.")
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "[MYSTIC FRAMEWORK] - Byte - The given variable type must be an integral type.")
 
     // Ensure the value is in byte range.
-    MYSTIC_DCHECK(value >= 0 && value <= 255, "The given variable value exceeds the range of byte.")
+    MYSTIC_DCHECK(value >= 0 && value <= 255, "[MYSTIC FRAMEWORK] - Byte - The given variable value exceeds the range of byte.")
 
     return static_cast<byte>(value);
 }
@@ -196,24 +194,40 @@ constexpr MYSTIC_FORCEINLINE byte operator~(const byte& byte) noexcept {
 /**
  * @brief Bitwise left shift operator.
  *
+ * @tparam IntegerType The integral type.
  * @param byte The byte value.
  * @param shift The required shift.
  *
+ * @pre IntegerType must be integral type.
+ *
  * @returns Byte after bitwise left shift operation.
  */
-constexpr MYSTIC_FORCEINLINE byte operator<<(const byte& byte, int shift) noexcept {
+template <typename IntegerType = unsigned int>
+constexpr MYSTIC_FORCEINLINE byte operator<<(const byte& byte, IntegerType shift) noexcept {
+    // Ensure that IntegerType is an integral type.
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "[MYSTIC FRAMEWORK] - Byte - The given variable type must be an integral type.")
+    
+    // Perform shift
     return static_cast<byte>(ConvertToInteger(byte) << shift);
 }
 
 /**
  * @brief Bitwise right shift operator.
  *
+ * @tparam IntegerType The integral type.
  * @param byte The byte value.
  * @param shift The required shift.
  *
+ * @pre IntegerType must be integral type.
+ *
  * @returns Byte after bitwise right shift operation.
  */
-constexpr MYSTIC_FORCEINLINE byte operator>>(const byte& byte, int shift) noexcept {
+template <typename IntegerType = unsigned int>
+constexpr MYSTIC_FORCEINLINE byte operator>>(const byte& byte, IntegerType shift) noexcept {
+    // Ensure that IntegerType is an integral type.
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "[MYSTIC FRAMEWORK] - Byte - The given variable type must be an integral type.")
+    
+    // Perform shift
     return static_cast<byte>(ConvertToInteger(byte) >> shift);
 }
 
@@ -262,12 +276,20 @@ constexpr MYSTIC_FORCEINLINE byte& operator^=(byte& lhs, const byte& rhs) noexce
 /**
  * @brief Bitwise left shift assignment operator.
  *
+ * @tparam IntegerType The integral type.
  * @param byte The byte value.
  * @param shift The required shift.
  *
+ * @pre IntegerType must be integral type.
+ *
  * @returns Reference to byte after bitwise left shift assignment operation.
  */
-constexpr MYSTIC_FORCEINLINE byte& operator<<=(byte& byte, int shift) noexcept {
+template <typename IntegerType = unsigned int>
+constexpr MYSTIC_FORCEINLINE byte& operator<<=(byte& byte, IntegerType shift) noexcept {
+    // Ensure that IntegerType is an integral type.
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "[MYSTIC FRAMEWORK] - Byte - The given variable type must be an integral type.")
+    
+    // Perform shift
     byte = byte << shift;
     return byte;
 }
@@ -275,14 +297,23 @@ constexpr MYSTIC_FORCEINLINE byte& operator<<=(byte& byte, int shift) noexcept {
 /**
  * @brief Bitwise right shift assignment operator.
  *
+ * @tparam IntegerType The integral type.
  * @param byte The byte value.
  * @param shift The required shift.
  *
+ * @pre IntegerType must be integral type.
+ *
  * @returns Reference to byte after bitwise right shift assignment operation.
  */
-constexpr MYSTIC_FORCEINLINE byte& operator>>=(byte& byte, int shift) noexcept {
+template <typename IntegerType = unsigned int>
+constexpr MYSTIC_FORCEINLINE byte& operator>>=(byte& byte, IntegerType shift) noexcept {
+    // Ensure that IntegerType is an integral type.
+    MYSTIC_DCHECK(::mystic::traits::is_integral_v<IntegerType>, "[MYSTIC FRAMEWORK] - Byte - The given variable type must be an integral type.")
+    
+    // Perform shift
     byte = byte >> shift;
     return byte;
 }
 
 } // namespace mystic::types::internal
+

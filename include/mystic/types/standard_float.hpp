@@ -72,9 +72,18 @@
 namespace mystic::types {
 
 /**
- * @brief Fixed width floats.
+ * @brief Fixed width floating-point types.
  */
-using float32_t
+using float16_t = ::mystic::types::internal::float16_t;
+using float32_t = ::mystic::types::internal::float32_t;
+using float64_t = ::mystic::types::internal::float64_t;
+using float128_t = ::mystic::types::internal::float128_t;
+
+/**
+ * @brief Fixed width brain floating point type.
+ */
+using bfloat16_t = ::mystic::types::internal::bfloat16_t;
+
 } // namespace mystic::types
 
 /**
