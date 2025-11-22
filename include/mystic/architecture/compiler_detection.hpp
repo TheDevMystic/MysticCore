@@ -57,6 +57,8 @@
 
 #include <string>
 
+#include "mystic/utility/stringify.hpp"
+
 /* =============================================
     Compiler Tags
    --------------------------------------------- */
@@ -123,13 +125,13 @@
  */
 # define MYSTIC_COMPILER MYSTIC_COMPILER_NVCC
 
-#elif defined(__INTEL_COMPILER) || defined(__ICC) || defined(__INTEL_LLVM_COMPILER) /* using Intel C++ compiler */
+#elif defined(__INTEL_LLVM_COMPILER) || defined(__INTEL_COMPILER)
 /**
  * @brief Set compiler tag to ICC.
  */
 # define MYSTIC_COMPILER MYSTIC_COMPILER_ICC
 
-#elif defined(_MSVC_VER)  /* using Microsoft/Visual C++ compiler */
+#elif defined(_MSC_VER)  /* using Microsoft/Visual C++ compiler */
 /**
  * @brief Set compiler tag MSVC.
  */
@@ -151,7 +153,7 @@
 /**
  * @brief Set compiler to unknown.
  */
-# define MYSTIC_COMPILER MYSTIC_COMPILER_UNKMOWN
+# define MYSTIC_COMPILER MYSTIC_COMPILER_UNKNOWN
 
 #endif // defined(__HIP__) || defined(__HIPCC__)
 
@@ -169,7 +171,7 @@
 #endif
 
 /* =============================================
-    Compiler Name Detection
+    Compiler Details Detection
    --------------------------------------------- */
 
 /**
@@ -206,17 +208,98 @@
  */
 # define MYSTIC_COMPILER_NAME "HIPCC"
 
+/**
+ * @brief Set compiler version to Major * 10000 + Minor * 100 + 0 (As HIPCC do not have patch).
+ */
+# define MYSTIC_COMPILER_VERSION \
+    HIP_VERSION_MAJOR * 10000 + HIP_VERSION_MINOR * 100
+
+/**
+ * @brief Define different level of versions.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR HIP_VERSION_MAJOR
+# define MYSTIC_COMPILER_VERSION_MINOR HIP_VERSION_MINOR
+# define MYSTIC_COMPILER_VERSION_PATCH 0
+
+/**
+ * @brief String version Major.Minor
+ */
+# define MYSTIC_COMPILER_VERSION_STR \
+    MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+
+/**
+ * @brief Levels of version in string.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR)
+# define MYSTIC_COMPILER_VERSION_MINOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+# define MYSTIC_COMPILER_VERSION_PATCH_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
+
 #elif (MYSTIC_COMPILER == MYSTIC_COMPILER_NVCC)
 /**
  * @brief Set compiler name to NVCC.
  */
 # define MYSTIC_COMPILER_NAME "NVCC"
 
+/**
+ * @brief Set compiler version to Major * 10000 + Minor * 100 + 0 (As NVCC do not have patch).
+ */
+// NVCC/CUDA runtime version is typically CUDART_VERSION (Major * 1000 + Minor * 10).
+# define MYSTIC_COMPILER_VERSION CUDART_VERSION
+
+/**
+ * @brief Define different level of versions.
+ */
+// Deriving components from CUDART_VERSION
+# define MYSTIC_COMPILER_VERSION_MAJOR (CUDART_VERSION / 1000)
+# define MYSTIC_COMPILER_VERSION_MINOR ((CUDART_VERSION % 1000) / 10)
+# define MYSTIC_COMPILER_VERSION_PATCH 0
+
+/**
+ * @brief String version Major.Minor
+ */
+# define MYSTIC_COMPILER_VERSION_STR \
+    MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+
+/**
+ * @brief Levels of version in string.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR)
+# define MYSTIC_COMPILER_VERSION_MINOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+# define MYSTIC_COMPILER_VERSION_PATCH_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
+
 #elif (MYSTIC_COMPILER == MYSTIC_COMPILER_ICC)
 /**
  * @brief Set compiler name to ICC.
  */
-# define MYSTIC_COMPILER_NAME "ICC"
+# if defined(__INTEL_LLVM_COMPILER)
+   // Using ICX (Clang-based Intel compiler)
+#  define MYSTIC_COMPILER_NAME "ICX (Clang-based)"
+#  define MYSTIC_COMPILER_VERSION \
+        __INTEL_LLVM_COMPILER / 100 * 10000 + (__INTEL_LLVM_COMPILER % 100) * 100 + 0 // Version is usually MajorMinor
+#  define MYSTIC_COMPILER_VERSION_MAJOR (__INTEL_LLVM_COMPILER / 100)
+#  define MYSTIC_COMPILER_VERSION_MINOR (__INTEL_LLVM_COMPILER % 100)
+#  define MYSTIC_COMPILER_VERSION_PATCH 0
+# else
+   // Using ICC Classic
+#  define MYSTIC_COMPILER_NAME "ICC Classic"
+#  define MYSTIC_COMPILER_VERSION __INTEL_COMPILER
+#  define MYSTIC_COMPILER_VERSION_MAJOR (__INTEL_COMPILER / 100)
+#  define MYSTIC_COMPILER_VERSION_MINOR (__INTEL_COMPILER % 100)
+#  define MYSTIC_COMPILER_VERSION_PATCH 0
+# endif
+
+/**
+ * @brief String version Major.Minor
+ */
+# define MYSTIC_COMPILER_VERSION_STR \
+    MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+
+/**
+ * @brief Levels of version in string.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR)
+# define MYSTIC_COMPILER_VERSION_MINOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+# define MYSTIC_COMPILER_VERSION_PATCH_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
 
 #elif (MYSTIC_COMPILER == MYSTIC_COMPILER_MSVC)
 /**
@@ -224,11 +307,68 @@
  */
 # define MYSTIC_COMPILER_NAME "MSVC"
 
+/**
+ * @brief Set compiler version to Major * 10000 + Minor * 100 + Patch (from _MSC_FULL_VER).
+ */
+// _MSC_VER is Major * 100 + Minor.
+# define MYSTIC_COMPILER_VERSION _MSC_VER
+
+/**
+ * @brief Define different level of versions.
+ */
+// Deriving components from _MSC_VER (Major * 100 + Minor)
+# define MYSTIC_COMPILER_VERSION_MAJOR (_MSC_VER / 100)
+# define MYSTIC_COMPILER_VERSION_MINOR (_MSC_VER % 100)
+# if defined(_MSC_FULL_VER)
+#   define MYSTIC_COMPILER_VERSION_PATCH (_MSC_FULL_VER % 100000) // The last 5 digits are usually the build number
+# else
+#   define MYSTIC_COMPILER_VERSION_PATCH 0
+# endif
+
+/**
+ * @brief String version Major.Minor.Patch
+ */
+# define MYSTIC_COMPILER_VERSION_STR \
+    MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
+
+/**
+ * @brief Levels of version in string.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR)
+# define MYSTIC_COMPILER_VERSION_MINOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+# define MYSTIC_COMPILER_VERSION_PATCH_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
+
 #elif (MYSTIC_COMPILER == MYSTIC_COMPILER_CLANG)
 /**
  * @brief Set compiler name to Clang.
  */
 # define MYSTIC_COMPILER_NAME "CLANG"
+
+/**
+ * @brief Set compiler version to Major * 10000 + Minor * 100 + Patch.
+ */
+# define MYSTIC_COMPILER_VERSION \
+    __clang_major__ * 10000 + __clang_minor__ * 100 + __clang_patchlevel__
+
+/**
+ * @brief Define different level of versions.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR __clang_major__
+# define MYSTIC_COMPILER_VERSION_MINOR __clang_minor__
+# define MYSTIC_COMPILER_VERSION_PATCH __clang_patchlevel__
+
+/**
+ * @brief String version Major.Minor.Patch
+ */
+# define MYSTIC_COMPILER_VERSION_STR \
+    MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
+
+/**
+ * @brief Levels of version in string.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR)
+# define MYSTIC_COMPILER_VERSION_MINOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+# define MYSTIC_COMPILER_VERSION_PATCH_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
 
 #elif (MYSTIC_COMPILER == MYSTIC_COMPILER_GCC)
 /**
@@ -236,13 +376,64 @@
  */
 # define MYSTIC_COMPILER_NAME "GCC"
 
+/**
+ * @brief Set compiler version to Major * 10000 + Minor * 100 + Patch.
+ */
+# define MYSTIC_COMPILER_VERSION \
+    __GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__
+
+/**
+ * @brief Define different level of versions.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR __GNUC__
+# define MYSTIC_COMPILER_VERSION_MINOR __GNUC_MINOR__
+# define MYSTIC_COMPILER_VERSION_PATCH __GNUC_PATCHLEVEL__
+
+/**
+ * @brief String version Major.Minor.Patch
+ */
+# define MYSTIC_COMPILER_VERSION_STR \
+    MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR) "." MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
+
+/**
+ * @brief Levels of version in string.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MAJOR)
+# define MYSTIC_COMPILER_VERSION_MINOR_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_MINOR)
+# define MYSTIC_COMPILER_VERSION_PATCH_STR MYSTIC_STRINGIFY(MYSTIC_COMPILER_VERSION_PATCH)
+
 #else /* if unknown */
 /**
  * @brief Set compiler name to UNKNOWN.
  */
 # define MYSTIC_COMPILER_NAME "UNKNOWN"
 
+/**
+ * @brief Set compiler version to 0.
+ */
+# define MYSTIC_COMPILER_VERSION 0
+
+/**
+ * @brief Define different level of versions as 0.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR 0
+# define MYSTIC_COMPILER_VERSION_MINOR 0
+# define MYSTIC_COMPILER_VERSION_PATCH 0
+
+/**
+ * @brief String version UNKNOWN.
+ */
+# define MYSTIC_COMPILER_VERSION_STR "0.0.0"
+
+/**
+ * @brief Levels of version in string.
+ */
+# define MYSTIC_COMPILER_VERSION_MAJOR_STR "0"
+# define MYSTIC_COMPILER_VERSION_MINOR_STR "0"
+# define MYSTIC_COMPILER_VERSION_PATCH_STR "0"
+
 #endif // (MYSTIC_COMPILER == MYSTIC_COMPILER_HIPCC)
+
 
 /**
  * @namespace mystic::architecture::compiler
@@ -253,9 +444,39 @@
 namespace mystic::architecture::compiler {
 
 /**
- * @brief 
-std::string GetCompilerName() {
-    return std::string(MYSTIC_COMPILER_NAME);
+ * @brief Returns compiler name in runtime.
+ */
+constexpr inline std::string GetCompilerName() {
+    return MYSTIC_COMPILER_NAME;
+}
+
+/**
+ * @brief Returns compiler version in runtime.
+ */
+constexpr inline std::string GetCompilerVersion() {
+    return MYSTIC_COMPILER_VERSION_STR;
+}
+
+/**
+ * @brief Returns compiler major version in runtime.
+ */
+constexpr inline std::string GetCompilerVersionMajor() {
+    return MYSTIC_COMPILER_VERSION_MAJOR_STR;
+}
+
+/**
+ * @brief Returns compiler minor version in runtime.
+ */
+constexpr inline std::string GetCompilerVersionMinor() {
+    return MYSTIC_COMPILER_VERSION_MINOR_STR;
+}
+
+/**
+ * @brief Returns compiler patch version in runtime.
+ */
+constexpr inline std::string GetCompilerVersionPatch() {
+    return MYSTIC_COMPILER_VERSION_PATCH_STR;
 }
 
 } // namespace mystic::architecture::compiler
+
