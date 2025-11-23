@@ -44,7 +44,7 @@
  * // For other compilers
  * #else
  * #define SOME_FORCEINLINE_MACRO inline
-  * #endif
+ * #endif
  * @endcode
  *
  * @author TheDevMystic (Surya)
