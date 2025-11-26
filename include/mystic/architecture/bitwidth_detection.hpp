@@ -175,7 +175,7 @@ namespace bitwidth {
 /**
  * @brief Returns BITWIDTH name in runtime.
  */
-constexpr inline const char* GetBitwdithName() {
+constexpr inline const char* get_bitwidth_name() {
     return MYSTIC_ARCH_BITWIDTH_NAME;
 }
 
