@@ -56,10 +56,16 @@
 #define MYSTIC_ARCH_BUILD_TYPE_DEBUG 0
 
 /**
+ * @macro MYSTIC_ARCH_BUILD_TYPE_RELEASE_WITH_DEBINFO
+ * @brief Tag for release with debug information build type.
+ */
+#define MYSTIC_ARCH_BUILD_TYPE_RELEASE_WITH_DEBINFO 1
+
+/**
  * @macro MYSTIC_ARCH_BUILD_TYPE_RELEASE
  * @brief Tag for release build type.
  */
-#define MYSTIC_ARCH_BUILD_TYPE_RELEASE 1
+#define MYSTIC_ARCH_BUILD_TYPE_RELEASE 2
 
 /* =============================================
     Detection Logic
@@ -74,6 +80,12 @@
  * @brief Set build type tag to Debug.
  */
 # define MYSTIC_ARCH_BUILD_TYPE MYSTIC_ARCH_BUILD_TYPE_DEBUG
+
+#elif defined(NDEBUG) && defined(_RELWITHDEBINFO) /* ReleaseWithDebInfo build */
+/**
+ * @brief Set build type tag to ReleaseWithDebInfo.
+ */
+# define MYSTIC_ARCH_BUILD_TYPE MYSTIC_ARCH_BUILD_TYPE_RELEASE_WITH_DEBINFO
 
 #else /* Default to Release */
 /**
@@ -96,6 +108,12 @@
  * @brief Set Build Type name to Debug.
  */
 # define MYSTIC_ARCH_BUILD_TYPE_NAME "Debug"
+
+#elif (MYSTIC_ARCH_BUILD_TYPE == MYSTIC_ARCH_BUILD_TYPE_RELEASE_WITH_DEBINFO)
+/**
+ * @brief Set Build Type name to ReleaseWithDebInfo.
+ */
+# define MYSTIC_ARCH_BUILD_TYPE_NAME "ReleaseWithDebInfo"
 
 #else
 /**
