@@ -321,17 +321,13 @@
 // Deriving components from _MSC_VER (Major * 100 + Minor)
 # define MYSTIC_ARCH_COMPILER_VERSION_MAJOR (_MSC_VER / 100)
 # define MYSTIC_ARCH_COMPILER_VERSION_MINOR (_MSC_VER % 100)
-# if defined(_MSC_FULL_VER)
-#   define MYSTIC_ARCH_COMPILER_VERSION_PATCH (_MSC_FULL_VER % 100000) // The last 5 digits are usually the build number
-# else
-#   define MYSTIC_ARCH_COMPILER_VERSION_PATCH 0
-# endif
+# define MYSTIC_ARCH_COMPILER_VERSION_PATCH 0
 
 /**
- * @brief String version Major.Minor.Patch
+ * @brief String version Major.Minor
  */
 # define MYSTIC_ARCH_COMPILER_VERSION_STR \
-    MYSTIC_ARCH_STRINGIFY(MYSTIC_ARCH_COMPILER_VERSION_MAJOR) "." MYSTIC_ARCH_STRINGIFY(MYSTIC_ARCH_COMPILER_VERSION_MINOR) "." MYSTIC_ARCH_STRINGIFY(MYSTIC_ARCH_COMPILER_VERSION_PATCH)
+    MYSTIC_ARCH_STRINGIFY(MYSTIC_ARCH_COMPILER_VERSION_MAJOR) "." MYSTIC_ARCH_STRINGIFY(MYSTIC_ARCH_COMPILER_VERSION_MINOR)
 
 /**
  * @brief Levels of version in string.
@@ -461,35 +457,35 @@ namespace compiler {
 /**
  * @brief Returns compiler name in runtime.
  */
-constexpr inline const char* GetCompilerName() {
+constexpr inline const char* get_compiler_name() {
     return MYSTIC_ARCH_COMPILER_NAME;
 }
 
 /**
  * @brief Returns compiler version in runtime.
  */
-constexpr inline const char* GetCompilerVersion() {
+constexpr inline const char* get_compiler_version() {
     return MYSTIC_ARCH_COMPILER_VERSION_STR;
 }
 
 /**
  * @brief Returns compiler major version in runtime.
  */
-constexpr inline const char* GetCompilerVersionMajor() {
+constexpr inline const char* get_compiler_version_major() {
     return MYSTIC_ARCH_COMPILER_VERSION_MAJOR_STR;
 }
 
 /**
  * @brief Returns compiler minor version in runtime.
  */
-constexpr inline const char* GetCompilerVersionMinor() {
+constexpr inline const char* get_compiler_version_minor() {
     return MYSTIC_ARCH_COMPILER_VERSION_MINOR_STR;
 }
 
 /**
  * @brief Returns compiler patch version in runtime.
  */
-constexpr inline const char* GetCompilerVersionPatch() {
+constexpr inline const char* get_compiler_version_patch() {
     return MYSTIC_ARCH_COMPILER_VERSION_PATCH_STR;
 }
 
