@@ -134,7 +134,7 @@ namespace toolchain {
 /**
  * @brief Returns TOOLCHAIN name in runtime.
  */
-constexpr inline const char* GetToolchainName() {
+constexpr inline const char* get_toolchain_name() {
     return MYSTIC_ARCH_TOOLCHAIN_NAME;
 }
 
