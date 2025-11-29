@@ -59,7 +59,7 @@
  */
 # define MYSTIC_NORETURN __attribute__((noreturn))
 
-#elif (MYSTIC_ARCH_STANDARD >= MYSTIC_ARCH_STANDARD_CPP11
+#elif (MYSTIC_ARCH_STANDARD >= MYSTIC_ARCH_STANDARD_CPP11)
 /**
  * @brief Use standard [[noreturn]].
  */
