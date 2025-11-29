@@ -153,9 +153,9 @@
 
 /**
  * @brief If Standard is unknown, then stop compilation.
- * Only way to restrict it is to define MYSTIC_ARCH_ALLOW_UNKNOWN_STANDARD.
+ * Only way to restrict it is to define MYSTIC_ALLOW_UNKNOWN_STANDARD.
  */
-#if (!defined(MYSTIC_ARCH_ALLOW_UNKNOWN_STANDARD) && \
+#if (!defined(MYSTIC_ALLOW_UNKNOWN_STANDARD) && \
     (MYSTIC_ARCH_STANDARD == MYSTIC_ARCH_STANDARD_UNKNOWN))
 /**
  * @brief Stop compilation.

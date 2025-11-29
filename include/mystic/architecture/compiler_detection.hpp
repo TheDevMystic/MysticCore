@@ -161,9 +161,9 @@
 
 /**
  * @brief If compiler is unknown, then stop compilation.
- * Only way to restrict it is to define MYSTIC_ARCH_ALLOW_UNKNOWN_COMPILER.
+ * Only way to restrict it is to define MYSTIC_ALLOW_UNKNOWN_COMPILER.
  */
-#if (!defined(MYSTIC_ARCH_ALLOW_UNKNOWN_COMPILER) && \
+#if (!defined(MYSTIC_ALLOW_UNKNOWN_COMPILER) && \
     (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_UNKNOWN))
 /**
  * @brief Stop compilation.

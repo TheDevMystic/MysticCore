@@ -136,9 +136,9 @@
 
 /**
  * @brief If CPU is unknown, then stop compilation.
- * Only way to restrict it is to define MYSTIC_ARCH_ALLOW_UNKNOWN_CPU.
+ * Only way to restrict it is to define MYSTIC_ALLOW_UNKNOWN_CPU.
  */
-#if (!defined(MYSTIC_ARCH_ALLOW_UNKNOWN_CPU) && \
+#if (!defined(MYSTIC_ALLOW_UNKNOWN_CPU) && \
     (MYSTIC_ARCH_CPU == MYSTIC_ARCH_CPU_UNKNOWN))
 /**
  * @brief Stop compilation.

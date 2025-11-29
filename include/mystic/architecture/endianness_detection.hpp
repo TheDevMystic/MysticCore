@@ -116,9 +116,9 @@
 
 /**
  * @brief If endianness is unknown, then stop compilation.
- * Only way to restrict it is to define MYSTIC_ARCH_ALLOW_UNKNOWN_ENDIANNESS.
+ * Only way to restrict it is to define MYSTIC_ALLOW_UNKNOWN_ENDIANNESS.
  */
-#if (!defined(MYSTIC_ARCH_ALLOW_UNKNOWN_ENDIANNESS) && \
+#if (!defined(MYSTIC_ALLOW_UNKNOWN_ENDIANNESS) && \
     (MYSTIC_ARCH_ENDIANNESS == MYSTIC_ARCH_ENDIANNESS_UNKNOWN))
 /**
  * @brief Stop compilation.

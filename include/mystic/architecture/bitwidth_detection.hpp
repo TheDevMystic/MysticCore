@@ -111,9 +111,9 @@
 
 /**
  * @brief If bitwidth is unknown, then stop compilation.
- * Only way to restrict it is to define MYSTIC_ARCH_ALLOW_UNKNOWN_BITWIDTH.
+ * Only way to restrict it is to define MYSTIC_ALLOW_UNKNOWN_BITWIDTH.
  */
-#if (!defined(MYSTIC_ARCH_ALLOW_UNKNOWN_BITWIDTH) && \
+#if (!defined(MYSTIC_ALLOW_UNKNOWN_BITWIDTH) && \
     (MYSTIC_ARCH_BITWIDTH == MYSTIC_ARCH_BITWIDTH_UNKNOWN))
 /**
  * @brief Stop compilation.
