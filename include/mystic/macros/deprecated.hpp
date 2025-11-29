@@ -52,15 +52,7 @@
  * @macro MYSTIC_DEPRECATED_WITH_MSG(msg)
  * @brief Macro to deprecate a function with a message.
  */
-#if (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_HIPCC) || \
-    (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_NVCC) /* using HIPCC/NVCC */
-/**
- * @brief HIPCC and NVCC use [[deprecated]].
- */
-# define MYSTIC_DEPRECATED_NO_MSG        [[deprecated]]
-# define MYSTIC_DEPRECATED_WITH_MSG(msg) [[deprecated(msg)]]
-
-#elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
+#if (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
 /**
  * @brief MSVC uses __declspec(deprecated).
  */
