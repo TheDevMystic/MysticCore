@@ -55,13 +55,6 @@
  */
 # define MYSTIC_MAYBE_UNUSED_ATTRIBUTE [[maybe_unused]]
 
-#elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_HIPCC) || \
-    (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_NVCC) /* using HIPCC/NVCC */
-/**
- * @brief HIPCC and NVCC use [[maybe_unused]].
- */
-# define MYSTIC_MAYBE_UNUSED_ATTRIBUTE [[maybe_unused]]
-
 #elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
 /**
  * @brief MSVC do not provide any.

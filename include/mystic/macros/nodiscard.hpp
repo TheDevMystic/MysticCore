@@ -54,14 +54,6 @@
 # define MYSTIC_NODISCARD_NO_MSG        [[nodiscard]]
 # define MYSTIC_NODISCARD_WITH_MSG(msg) [[nodiscard(msg)]]
 
-#elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_HIPCC) || \
-    (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_NVCC) /* using HIPCC/NVCC */
-/**
- * @brief HIPCC and NVCC use [[nodiscard]].
- */
-# define MYSTIC_NODISCARD_NO_MSG        [[nodiscard]]
-# define MYSTIC_NODISCARD_WITH_MSG(msg) [[nodiscard]]
-
 #elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
 /**
  * @brief MSVC uses _Check_return_.

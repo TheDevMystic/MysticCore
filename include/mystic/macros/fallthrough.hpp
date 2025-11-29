@@ -63,13 +63,6 @@
  */
 # define MYSTIC_FALLTHROUGH [[fallthrough]]
 
-#elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_HIPCC) || \
-    (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_NVCC) /* using HIPCC/NVCC */
-/**
- * @brief HIPCC and NVCC use [[fallthrough]].
- */
-# define MYSTIC_FALLTHROUGH [[fallthrough]]
-
 #elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
 /**
  * @brief MSVC do not provide any.

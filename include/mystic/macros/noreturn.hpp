@@ -45,14 +45,7 @@
  * @macro MYSTIC_NORETURN
  * @brief Macro to no return a function.
  */
-#if (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_HIPCC) || \
-    (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_NVCC) /* using HIPCC/NVCC */
-/**
- * @brief HIPCC and NVCC use __noreturn__.
- */
-# define MYSTIC_NORETURN [[noreturn]]
-
-#elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
+#if (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
 /**
  * @brief MSVC uses __declspec(noreturn).
  */
