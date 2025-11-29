@@ -14,7 +14,7 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/deprecated.hpp
+ * @path [ROOT]/include/mystic/attributes/deprecated.hpp
  * @file deprecated.hpp
  * @brief Defines deprecated macro.
  *
@@ -24,7 +24,7 @@
  * 
  * @code {.cpp}
  * // Example
- * #include "mystic/macros/deprecated.hpp"
+ * #include "mystic/attributes/deprecated.hpp"
  *
  * MYSTIC_DEPRECATED
  * void some_deprecated_func();

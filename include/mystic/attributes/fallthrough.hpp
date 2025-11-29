@@ -14,23 +14,31 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/maybe_unused.hpp
- * @file maybe_unused.hpp
- * @brief Defines maybe_unused macro.
+ * @path [ROOT]/include/mystic/attributes/fallthrough.hpp
+ * @file fallthrough.hpp
+ * @brief Defines fallthrough macro.
  *
  * @details
- * This header provides maybe_unused macro to mark a variable
- * as unused.
+ * This header provides fallthrough macro to fallthrough
+ * a switch statement.
  * 
  * @code {.cpp}
  * // Example
- * #include "mystic/macros/maybe_unused.hpp"
+ * #include "mystic/attributes/fallthrough.hpp"
  *
- * int some_func(int a, MYSTIC_MAYBE_UNUSED b) {
- *     int c = a;
- *     return a;
+ * // ... in code
+ * switch (SomeCase) {
+ *     case 1:
+ *         do_something();
+ *         // intended fallthrough
+ *         MYSTIC_FALLTHROUGH
+ *     case 2:
+ *         do_another_thing();
+ *     default:
+ *         do_third_thing();
  * }
- * // No warning as b is marked with MYSTIC_MAYBE_UNUSED.
+ *
+ * // no warning as MYSTIC_FALLTHROUGH supress it.
  * 
  * @endcode
  *
@@ -46,59 +54,34 @@
 #include "mystic/architecture/standard_detection.hpp"
 
 /**
- * @macro MYSTIC_MAYBE_UNUSED_ATTRIBUTE
+ * @macro MYSTIC_FALLTHROUGH
  * @brief Macro to mark a variable as unused.
  */
 #if (MYSTIC_ARCH_STANDARD >= MYSTIC_ARCH_STANDARD_CPP17)
 /**
- * @brief Use the standard [[maybe_unused]].
+ * @brief Use the standard [[fallthrough]].
  */
-# define MYSTIC_MAYBE_UNUSED_ATTRIBUTE [[maybe_unused]]
+# define MYSTIC_FALLTHROUGH [[fallthrough]]
 
 #elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
 /**
  * @brief MSVC do not provide any.
  */
-# define MYSTIC_MAYBE_UNUSED_ATTRIBUTE
+# define MYSTIC_FALLTHROUGH
 
 #elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_CLANG) || \
       (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_GCC) || \
       (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_ICC) /* using Clang/GCC/ICC */
 /**
- * @brief Clang, GCC, and ICC use __attribute__((unused)).
+ * @brief Clang, GCC, and ICC use __attribute__((fallthrough)).
  */
-# define MYSTIC_MAYBE_UNUSED_ATTRIBUTE __attribute__((unused))
+# define MYSTIC_FALLTHROUGH __attribute__((fallthrough))
 
 #else /* if unknown */
 /**
  * @brief Use blank no-op.
  */
-# define MYSTIC_MAYBE_UNUSED_ATTRIBUTE
+# define MYSTIC_FALLTHROUGH
 
 #endif
-
-/**
- * @macro MYSTIC_MAYBE_UNUSED_VOID_CAST(variable)
- * @brief Marks an variable unused by void casting.
- */
-#define MYSTIC_MAYBE_UNUSED_VOID_CAST(variable) (void)(variable)
-
-/* =================================================
-    Dispatching Logic
-   ------------------------------------------------- */
-
-/**
- * @macro MYSTIC_MAYBE_UNUSED_DISPATCHER
- * @brief Dispatches unused macro based whether value was provided or not.
- */
-#define MYSTIC_MAYBE_UNUSED_DISPATCHER(_1, N, ...) N
-
-/**
- * @macro MYSTIC_MAYBE_UNUSED
- * @brief Public facing maybe_unused macro.
- */
-#define MYSTIC_MAYBE_UNUSED(...) \
-    MYSTIC_MAYBE_UNUSED_DISPATCHER(__VA_ARGS__, \
-            MYSTIC_MAYBE_UNUSED_ATTRIBUTE, \
-            MYSTIC_MAYBE_UNUSED_VOID_CAST, )()(__VA_ARGS__)
 

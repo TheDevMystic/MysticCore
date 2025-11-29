@@ -14,7 +14,7 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/branch_prediction.hpp
+ * @path [ROOT]/include/mystic/attributes/branch_prediction.hpp
  * @file branch_prediction.hpp
  * @brief Defines likely & unlikely macro.
  *
@@ -24,7 +24,7 @@
  * 
  * @code {.cpp}
  * // Example
- * #include "mystic/macros/branch_prediction.hpp"
+ * #include "mystic/attributes/branch_prediction.hpp"
  *
  * // ... in code
  * // When compiler do not support attribute (Pre-C++20)

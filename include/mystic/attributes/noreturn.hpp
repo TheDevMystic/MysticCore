@@ -14,7 +14,7 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/noreturn.hpp
+ * @path [ROOT]/include/mystic/attributes/noreturn.hpp
  * @file noreturn.hpp
  * @brief Defines noreturn macro.
  *
@@ -24,7 +24,7 @@
  * 
  * @code {.cpp}
  * // Example
- * #include "mystic/macros/noreturn.hpp"
+ * #include "mystic/attributes/noreturn.hpp"
  *
  * MYSTIC_NORETURN void some_func_need_to_noreturn();
  * 

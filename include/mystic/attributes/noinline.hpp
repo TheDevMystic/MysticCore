@@ -14,31 +14,19 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/fallthrough.hpp
- * @file fallthrough.hpp
- * @brief Defines fallthrough macro.
+ * @path [ROOT]/include/mystic/attributes/noinline.hpp
+ * @file noinline.hpp
+ * @brief Defines noinline macro.
  *
  * @details
- * This header provides fallthrough macro to fallthrough
- * a switch statement.
+ * This header provides noinline macro to not inline a function,
+ * overriding compiler's benifit heuristic.
  * 
  * @code {.cpp}
  * // Example
- * #include "mystic/macros/fallthrough.hpp"
+ * #include "mystic/attributes/noinline.hpp"
  *
- * // ... in code
- * switch (SomeCase) {
- *     case 1:
- *         do_something();
- *         // intended fallthrough
- *         MYSTIC_FALLTHROUGH
- *     case 2:
- *         do_another_thing();
- *     default:
- *         do_third_thing();
- * }
- *
- * // no warning as MYSTIC_FALLTHROUGH supress it.
+ * MYSTIC_NOINLINE void some_func_need_to_noinlined();
  * 
  * @endcode
  *
@@ -51,37 +39,37 @@
 #pragma once
 
 #include "mystic/architecture/compiler_detection.hpp"
-#include "mystic/architecture/standard_detection.hpp"
 
 /**
- * @macro MYSTIC_FALLTHROUGH
- * @brief Macro to mark a variable as unused.
+ * @macro MYSTIC_NOINLINE
+ * @brief Macro to no inline a function.
  */
-#if (MYSTIC_ARCH_STANDARD >= MYSTIC_ARCH_STANDARD_CPP17)
+#if (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_HIPCC) || \
+    (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_NVCC) /* using HIPCC/NVCC */
 /**
- * @brief Use the standard [[fallthrough]].
+ * @brief HIPCC and NVCC use __noinline__.
  */
-# define MYSTIC_FALLTHROUGH [[fallthrough]]
+# define MYSTIC_NOINLINE __noinline__
 
 #elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
 /**
- * @brief MSVC do not provide any.
+ * @brief MSVC uses __declspec(noinline).
  */
-# define MYSTIC_FALLTHROUGH
+# define MYSTIC_NOINLINE __declspec(noinline)
 
 #elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_CLANG) || \
       (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_GCC) || \
       (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_ICC) /* using Clang/GCC/ICC */
 /**
- * @brief Clang, GCC, and ICC use __attribute__((fallthrough)).
+ * @brief Clang, GCC, and ICC use __attribute__((noinline)).
  */
-# define MYSTIC_FALLTHROUGH __attribute__((fallthrough))
+# define MYSTIC_NOINLINE __attribute__((noinline))
 
 #else /* if unknown */
 /**
  * @brief Use blank no-op.
  */
-# define MYSTIC_FALLTHROUGH
+# define MYSTIC_NOINLINE
 
 #endif
 

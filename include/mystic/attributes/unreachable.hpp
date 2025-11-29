@@ -14,12 +14,12 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/unreachable.hpp
+ * @path [ROOT]/include/mystic/attributes/unreachable.hpp
  * @file unreachable.hpp
  * @brief Defines unreachable macro.
  *
  * @code{.cpp}
- * #include "mystic/macros/unreachable.hpp"
+ * #include "mystic/attributes/unreachable.hpp"
  *
  * void control_loop() {
  *     // ... main loop
@@ -38,7 +38,7 @@
 #pragma once
 
 #include "mystic/architecture/compiler_detection.hpp"
-#include "mystic/macros/forceinline.hpp"
+#include "mystic/attributes/forceinline.hpp"
 
 /**
  * @macro MYSTIC_UNREACHABLE()

@@ -14,22 +14,21 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/no_unique_address.hpp
- * @file no_unique_address.hpp
- * @brief Defines no_unique_address macro.
- *
- * @details
- * This header provides no_unique_address macro for EBCO.
+ * @path [ROOT]/include/mystic/attributes/assume.hpp
+ * @file assume.hpp
+ * @brief Defines assume macro.
  * 
  * @code {.cpp}
  * // Example
- * #include "mystic/macros/no_unique_address.hpp"
+ * #include "mystic/attributes/assume.hpp"
  *
- * class MyCoolClass {
- *     MYSTIC_NO_UNIQUE_ADDRESS int x;
- * };
+ * int shift(int x) {
+ *     MYSTIC_ASSUME(x >= 0)
+ *     return x / 32;
+ * }
  *
- * // sizeof(MyCoolClass) == 1 evalutes to true.
+ * // ↑ The above function can be optimized by the compiler
+ * // As x is sure to be +ve.
  * 
  * @endcode
  *
@@ -41,23 +40,38 @@
  */
 #pragma once
 
+#include "mystic/architecture/compiler_detection.hpp"
 #include "mystic/architecture/standard_detection.hpp"
 
 /**
- * @macro MYSTIC_NO_UNIQUE_ADDRESS
- * @brief Macro for no unique address.
+ * @macro MYSTIC_ASSUME(cond)
+ * @brief Macro to assume a condition.
  */
-#if (MYSTIC_ARCH_STANDARD >= MYSTIC_ARCH_STANDARD_CPP20)
+#if (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_MSVC) /* using MSVC */
 /**
- * @brief Use standard macro.
+ * @brief MSVC uses __assume().
  */
-# define MYSTIC_NO_UNIQUE_ADDRESS [[no_unique_address]]
+# define MYSTIC_ASSUME(cond) __assume(cond)
+
+#elif (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_CLANG) || \
+      (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_GCC) || \
+      (MYSTIC_ARCH_COMPILER == MYSTIC_ARCH_COMPILER_ICC) /* using Clang/GCC/ICC */
+/**
+ * @brief Clang, GCC, and ICC use __builtin_assume()
+ */
+# define MYSTIC_ASSUME __builtin_assume(cond)
+
+#elif (MYSTIC_ARCH_STANDARD > MYSTIC_ARCH_STANDARD_CPP20)
+/**
+ * @brief Use standard [[assume]].
+ */
+# define MYSTIC_ASSUME(cond) [[assume(cond)]]
 
 #else /* if unknown */
 /**
  * @brief Use blank no-op.
  */
-# define MYSTIC_NO_UNIQUE_ADDRESS
+# define MYSTIC_ASSUME
 
 #endif
 

@@ -14,7 +14,7 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/nodiscard.hpp
+ * @path [ROOT]/include/mystic/attributes/nodiscard.hpp
  * @file nodiscard.hpp
  * @brief Defines nodiscard macro.
  *
@@ -23,7 +23,7 @@
  * 
  * @code {.cpp}
  * // Example
- * #include "mystic/macros/nodiscard.hpp"
+ * #include "mystic/attributes/nodiscard.hpp"
  *
  * MYSTIC_NODISCARD int some_important_func();
  * 

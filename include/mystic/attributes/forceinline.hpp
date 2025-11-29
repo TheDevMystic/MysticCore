@@ -14,7 +14,7 @@
  *
  * ------------------------------------------------------------------------------------------------------
  *
- * @path [ROOT]/include/mystic/macros/forceinline.hpp
+ * @path [ROOT]/include/mystic/attributes/forceinline.hpp
  * @file forceinline.hpp
  * @brief Defines forceinline macro.
  *
@@ -24,7 +24,7 @@
  * 
  * @code {.cpp}
  * // Example
- * #include "mystic/macros/forceinline.hpp"
+ * #include "mystic/attributes/forceinline.hpp"
  *
  * MYSTIC_FORCEINLINE void some_func_need_to_inlined();
  * 
