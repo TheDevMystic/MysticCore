@@ -58,6 +58,12 @@
 #include "mystic/types/internal/byte_internal.hpp"
 
 /**
+ * @namespace mystic
+ * @brief Top-level namespace.
+ */
+namespace mystic {
+
+/**
  * @namespace mystic::types
  * @ingroup Types
  * @brief Basic and high level data types.
@@ -65,7 +71,7 @@
  * This namespace contains all data types from low level
  * to high level.
  */
-namespace mystic::types {
+namespace types {
 
 /**
  * @brief Type aliases to standard types.
@@ -80,7 +86,8 @@ using nullptr_t   = ::std::nullptr_t;
  */
 using byte = ::mystic::types::internal::byte;
 
-} // namespace mystic::types
+} // namespace types
+} // namespace mystic
 
 /**
  * @brief if user opted in for macros, then alias standard library
