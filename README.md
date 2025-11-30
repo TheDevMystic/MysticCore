@@ -27,7 +27,7 @@ Its primary goal is to ensure consistency, thread-safety, and maximum portabilit
 ## Building Library
 1. **Clone the repository**:
 ```bash
-git clone https://github.com/TheDevMystic/MysticCore.git
+git clone https://github.com/thedevmystic/MysticCore.git
 cd MysticCore
 ```
 
@@ -55,4 +55,4 @@ For dynamic (OS-specific)
 ## License
 This project is licensed under the MIT license - See the `LICENSE` file for details.
 
-*Signing off, TheDevMystic*
+*Signing off, thedevmystic*

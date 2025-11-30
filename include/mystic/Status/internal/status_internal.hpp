@@ -61,7 +61,7 @@
  * `mystic::status::Status` is used for functions which have conceptual return type of `void`.
  * If some function returns something use `mystic::status::StatusOr<T>` instead (see mystic/status/status_or.h)
  *
- * @author TheDevMystic (Surya)
+ * @author thedevmystic (Surya)
  * @copyright 2025 Suryansh Singh Apache-2.0 License
  *
  * SPDX-FileCopyrightText: 2025 Suryansh Singh

@@ -18,7 +18,7 @@
  * @file framework_api.hpp
  * @brief Defines framework api macro.
  *
- * @author TheDevMystic (Surya)
+ * @author thedevmystic (Surya)
  * @copyright 2025 Suryansh Singh Apache-2.0 License
  *
  * SPDX-FileCopyrightText: 2025 Suryansh Singh

@@ -18,7 +18,7 @@
  * @file is_integral.hpp
  * @brief Defines is integral type trait.
  *
- * @author TheDevMystic (Surya)
+ * @author thedevmystic (Surya)
  * @copyright 2025 Suryansh Singh Apache-2.0 License
  *
  * SPDX-FileCopyrightText: 2025 Suryansh Singh

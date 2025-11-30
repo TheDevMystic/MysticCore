@@ -22,7 +22,7 @@
  * This header defines Float32 for pre-C++23. It is intended for internal usage only.
  * It will be public if compiler is pre-C++23 via, types/standard_float.hpp.
  *
- * @author TheDevMystic (Surya)
+ * @author thedevmystic (Surya)
  * @copyright 2025 Suryansh Singh Apache-2.0 License
  *
  * SPDX-FileCopyrightText: 2025 Suryansh Singh
