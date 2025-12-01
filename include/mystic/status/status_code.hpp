@@ -54,7 +54,7 @@ namespace status {
  * @brief Enum class for status, and error codes.
  */
 enum class MYSTIC_FRAMEWORK_API StatusCode :
-    ::mystic::types::uint32_t {
+    ::mystic::types::uint16_t {
 
     /**
      * @brief OK, or Success.
@@ -164,6 +164,12 @@ enum class MYSTIC_FRAMEWORK_API StatusCode :
      */
     DATA_LOSS = 0x000F,
 
+    /**
+     * @brief Unknown status code.
+     * Enum to denote that the status code is unknown.
+     */
+    UNKNOWN = 0xFFFF
+
 }; // enum class StatusCode
 
 /**
@@ -210,6 +216,8 @@ MYSTIC_NODISCARD MYSTIC_FORCEINLINE
             return "UNAVAILABLE";
         case StatusCode::DATA_LOSS:
             return "DATA LOSS";
+        case StatusCode::UNKNOWN:
+            return "UNKNOWN";
         default:
             ::mystic::unreachable();
     }
@@ -267,7 +275,7 @@ StatusCode from_string(const ::mystic::string& str) noexcept {
     } else if (str_upper == "DATA LOSS") {
         return StatusCode::DATA_LOSS;
     } else {
-        return StatusCode::OK;
+        return StatusCode::UNKNOWN;
     }
 }
 
