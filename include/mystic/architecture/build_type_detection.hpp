@@ -140,10 +140,10 @@ namespace mystic {
 namespace architecture {
 
 /**
- * @namespace mystic::architecture::build type
+ * @namespace mystic::architecture::build_type
  * @brief Contains build type-specific runtime code.
  */
-namespace build type {
+namespace build_type {
 
 /**
  * @brief Returns BUILD_TYPE name in runtime.
@@ -152,7 +152,7 @@ constexpr inline const char* get_build_type_name() {
     return MYSTIC_ARCH_BUILD_TYPE_NAME;
 }
 
-} // namespace build type
+} // namespace build_type
 } // namespace architecture
 } // namespace mystic
 

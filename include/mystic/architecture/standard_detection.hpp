@@ -84,7 +84,7 @@
  * @macro MYSTIC_ARCH_STANDARD_UNKNOWN
  * @brief Tag for unknown Standard (Value: 999999L)
  */
-#define MYSTIC_ARCH_STANDARD_CPP20 999999L
+#define MYSTIC_ARCH_STANDARD_UNKNOWN 999999L
 
 /* =============================================
     Detection Logic
