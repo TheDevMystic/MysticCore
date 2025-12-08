@@ -30,10 +30,9 @@
  */
 #pragma once
 
-#include "mystic/attributes/forceinline.hpp"
-#include "mystic/attributes/nodiscard.hpp"
-#include "mystic/attributes/unreachable.hpp"
-#include "mystic/containers/string.hpp"
+#include <string>
+
+#include "mystic/attributes/attributes.hpp"
 #include "mystic/macros/framework_api.hpp"
 #include "mystic/types/standard_int.hpp"
 #include "mystic/utility/string_utils.hpp"
@@ -182,7 +181,7 @@ enum class MYSTIC_FRAMEWORK_API StatusCode :
  * @returns The corresponding string.
  */
 MYSTIC_NODISCARD MYSTIC_FORCEINLINE
-::mystic::string to_string(const StatusCode& code) noexcept {
+std::string to_string(const StatusCode& code) noexcept {
     switch(code) {
         case StatusCode::OK:
             return "OK";
@@ -237,10 +236,10 @@ MYSTIC_NODISCARD MYSTIC_FORCEINLINE
  * When unknown string is given, it defaults to `StatusCode::OK`.
  */
 MYSTIC_NODISCARD MYSTIC_FORCEINLINE
-StatusCode from_string(const ::mystic::string& str) noexcept {
+StatusCode from_string(const std::string& str) noexcept {
 
     // Convert to uppercase for case-agnostic comparision.
-    ::mystic::string str_upper = ::mystic::string_utils::to_uppercase(str);
+    std::string str_upper = std::string_utils::to_uppercase(str);
 
     if (str_upper == "OK") {
         return StatusCode::OK;
