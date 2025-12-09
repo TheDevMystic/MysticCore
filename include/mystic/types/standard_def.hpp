@@ -74,8 +74,7 @@ using max_align_t = ::std::max_align_t;
 using nullptr_t   = ::std::nullptr_t;
 using byte        = ::std::byte;
 
-} // namespace types
-} // namespace mystic
+} // namespace mystic::types
 
 /**
  * @brief if user opted in for macros, then alias standard library

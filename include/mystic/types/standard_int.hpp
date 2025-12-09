@@ -140,8 +140,7 @@ using uintmax_t = ::std::uintmax_t;
 using intptr_t  = ::std::intptr_t;
 using uintptr_t = ::std::uintptr_t;
 
-} // namespace types
-} // namespace mystic
+} // namespace mystic::types
 
 /**
  * @brief if user opted in for macros, then alias standard library
